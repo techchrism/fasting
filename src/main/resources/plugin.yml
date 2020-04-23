@@ -1,0 +1,12 @@
+name: DisableEat
+main: com.darkender.plugins.disableeat.DisableEat
+version: ${project.version}
+api-version: 1.15
+author: Techdoodle
+commands:
+  disableeat:
+    aliases:
+      - deat
+    usage: "Usage: /disableeat [check|reload]"
+    description: "The core DisableEat command"
+    permission: disableeat.cmd
