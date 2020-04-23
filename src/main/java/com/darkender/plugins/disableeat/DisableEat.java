@@ -7,12 +7,15 @@ import jdk.internal.jline.internal.Nullable;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class DisableEat extends JavaPlugin
+public class DisableEat extends JavaPlugin implements Listener
 {
     private Set<String> enabledWorlds;
     private boolean enabledToDisabled;
@@ -29,6 +32,8 @@ public class DisableEat extends JavaPlugin
         DisableEatCommand disableEatCommand = new DisableEatCommand(this);
         getCommand("disableeat").setExecutor(disableEatCommand);
         getCommand("disableeat").setTabCompleter(disableEatCommand);
+        
+        getServer().getPluginManager().registerEvents(this, this);
     }
     
     public boolean isEnabledWorld(World world)
@@ -46,6 +51,29 @@ public class DisableEat extends JavaPlugin
             }
         }
         return false;
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerItemConsume(PlayerItemConsumeEvent event)
+    {
+        boolean disabled = (isEnabledWorld(event.getPlayer().getWorld()) && isInTimeRange(event.getPlayer().getWorld()));
+        if(disabled)
+        {
+            if(event.getItem().getType().isEdible() && preventEating)
+            {
+                event.setCancelled(true);
+            }
+            else if(preventDrinking)
+            {
+                event.setCancelled(true);
+            }
+            
+            if(event.isCancelled() && !disabledMessage.isEmpty())
+            {
+                event.getPlayer().sendMessage(disabledMessage);
+            }
+        }
+        
     }
     
     public void reload(CommandSender sender)
