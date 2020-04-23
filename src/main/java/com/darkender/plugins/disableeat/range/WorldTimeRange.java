@@ -1,5 +1,6 @@
 package com.darkender.plugins.disableeat.range;
 
+import jdk.internal.jline.internal.Nullable;
 import org.bukkit.World;
 
 public class WorldTimeRange extends DisabledRange
@@ -13,9 +14,9 @@ public class WorldTimeRange extends DisabledRange
     }
     
     @Override
-    public boolean in(World world)
+    public boolean in(@Nullable World world)
     {
-        return (world.getTime() >= from && world.getTime() <= to);
+        return (world != null && (world.getTime() >= from && world.getTime() <= to));
     }
     
     public int getFrom()

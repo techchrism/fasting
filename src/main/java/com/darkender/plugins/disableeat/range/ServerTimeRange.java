@@ -1,5 +1,6 @@
 package com.darkender.plugins.disableeat.range;
 
+import jdk.internal.jline.internal.Nullable;
 import org.bukkit.World;
 
 import java.time.Duration;
@@ -31,7 +32,7 @@ public class ServerTimeRange extends DisabledRange
     }
     
     @Override
-    public boolean in(World world)
+    public boolean in(@Nullable World world)
     {
         long secondsSinceMidnight = getSecondsSinceMidnight();
         return (secondsSinceMidnight >= from && secondsSinceMidnight <= to);

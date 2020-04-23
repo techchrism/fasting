@@ -10,3 +10,15 @@ commands:
     usage: "Usage: /disableeat [check|reload]"
     description: "The core DisableEat command"
     permission: disableeat.cmd
+permissions:
+  disableeat.cmd:
+    description: "Permission for the core DisableEat command"
+  disableeat.cmd.check:
+    description: "Permission to check if a player can eat"
+    default: true
+  disableeat.cmd.reload:
+    description: "Permission to reload the config"
+  disableeat.cmd.*:
+    children:
+      disableeat.cmd.check: true
+      disableeat.cmd.reload: true

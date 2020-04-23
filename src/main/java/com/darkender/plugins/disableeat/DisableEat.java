@@ -3,7 +3,9 @@ package com.darkender.plugins.disableeat;
 import com.darkender.plugins.disableeat.range.DisabledRange;
 import com.darkender.plugins.disableeat.range.ServerTimeRange;
 import com.darkender.plugins.disableeat.range.WorldTimeRange;
+import jdk.internal.jline.internal.Nullable;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,6 +25,27 @@ public class DisableEat extends JavaPlugin
     public void onEnable()
     {
         reload(getServer().getConsoleSender());
+        
+        DisableEatCommand disableEatCommand = new DisableEatCommand(this);
+        getCommand("disableeat").setExecutor(disableEatCommand);
+        getCommand("disableeat").setTabCompleter(disableEatCommand);
+    }
+    
+    public boolean isEnabledWorld(World world)
+    {
+        return (enabledWorlds.contains(world.getName()) != enabledToDisabled);
+    }
+    
+    public boolean isInTimeRange(@Nullable World world)
+    {
+        for(DisabledRange range : disabledRanges)
+        {
+            if(range.in(world))
+            {
+                return true;
+            }
+        }
+        return false;
     }
     
     public void reload(CommandSender sender)
@@ -68,5 +91,15 @@ public class DisableEat extends JavaPlugin
         }
         
         disabledMessage = ChatColor.translateAlternateColorCodes('&', getConfig().getString("disabled-message"));
+    }
+    
+    public boolean shouldPreventEating()
+    {
+        return preventEating;
+    }
+    
+    public boolean shouldPreventDrinking()
+    {
+        return preventDrinking;
     }
 }
