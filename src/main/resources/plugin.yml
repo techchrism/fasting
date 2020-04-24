@@ -1,24 +1,24 @@
-name: DisableEat
-main: com.darkender.plugins.disableeat.DisableEat
+name: Fasting
+main: com.darkender.plugins.fasting.Fasting
 version: ${project.version}
 api-version: 1.15
 author: Techdoodle
 commands:
-  disableeat:
+  fasting:
     aliases:
-      - deat
-    usage: "Usage: /disableeat [check|reload]"
-    description: "The core DisableEat command"
-    permission: disableeat.cmd
+      - fast
+    usage: "Usage: /fasting [check|reload]"
+    description: "The core Fasting command"
+    permission: fasting.cmd
 permissions:
-  disableeat.cmd:
-    description: "Permission for the core DisableEat command"
-  disableeat.cmd.check:
-    description: "Permission to check if a player can eat"
+  fasting.cmd:
+    description: "Permission for the core Fasting command"
+  fasting.cmd.check:
+    description: "Permission to check if a player can eat/drink"
     default: true
-  disableeat.cmd.reload:
+  fasting.cmd.reload:
     description: "Permission to reload the config"
-  disableeat.cmd.*:
+  fasting.cmd.*:
     children:
-      disableeat.cmd.check: true
-      disableeat.cmd.reload: true
+      fasting.cmd.check: true
+      fasting.cmd.reload: true

@@ -1,8 +1,8 @@
-package com.darkender.plugins.disableeat;
+package com.darkender.plugins.fasting;
 
-import com.darkender.plugins.disableeat.range.DisabledRange;
-import com.darkender.plugins.disableeat.range.ServerTimeRange;
-import com.darkender.plugins.disableeat.range.WorldTimeRange;
+import com.darkender.plugins.fasting.range.DisabledRange;
+import com.darkender.plugins.fasting.range.ServerTimeRange;
+import com.darkender.plugins.fasting.range.WorldTimeRange;
 import jdk.internal.jline.internal.Nullable;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DisableEat extends JavaPlugin implements Listener
+public class Fasting extends JavaPlugin implements Listener
 {
     private Set<String> enabledWorlds;
     private boolean enabledToDisabled;
@@ -29,9 +29,9 @@ public class DisableEat extends JavaPlugin implements Listener
     {
         reload(getServer().getConsoleSender());
         
-        DisableEatCommand disableEatCommand = new DisableEatCommand(this);
-        getCommand("disableeat").setExecutor(disableEatCommand);
-        getCommand("disableeat").setTabCompleter(disableEatCommand);
+        FastingCommand fastCommand = new FastingCommand(this);
+        getCommand("fasting").setExecutor(fastCommand);
+        getCommand("fasting").setTabCompleter(fastCommand);
         
         getServer().getPluginManager().registerEvents(this, this);
     }

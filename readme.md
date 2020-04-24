@@ -1,15 +1,15 @@
 A plugin that disables eating/drinking during certain time ranges
 
 Permissions:
- - disableeat.cmd.reload\
+ - fasting.cmd.reload\
    Permission to reload the config
- - disableeat.cmd.check\
-   Permission to check if a player can eat
+ - fasting.cmd.check\
+   Permission to check if a player can eat/drink
 
 Commands:
- - /disableeat reload or /deat reload\
+ - /fasting reload or /fast reload\
    Reloads the config
- - /disableeat check (world) or /deat check (world)\
+ - /fasting check (world) or /fast check (world)\
    Checks if a player can eat in the current world or the specified world
 
 Config:

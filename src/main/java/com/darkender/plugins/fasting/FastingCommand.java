@@ -1,4 +1,4 @@
-package com.darkender.plugins.disableeat;
+package com.darkender.plugins.fasting;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,12 +13,12 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisableEatCommand implements CommandExecutor, TabCompleter
+public class FastingCommand implements CommandExecutor, TabCompleter
 {
     private final List<String> empty = new ArrayList<>();
-    private final DisableEat plugin;
+    private final Fasting plugin;
     
-    public DisableEatCommand(DisableEat plugin)
+    public FastingCommand(Fasting plugin)
     {
         this.plugin = plugin;
     }

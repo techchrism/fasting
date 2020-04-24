@@ -1,4 +1,4 @@
-package com.darkender.plugins.disableeat.range;
+package com.darkender.plugins.fasting.range;
 
 import jdk.internal.jline.internal.Nullable;
 import org.bukkit.World;

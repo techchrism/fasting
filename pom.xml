@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.darkender.plugins</groupId>
-    <artifactId>disableeat</artifactId>
+    <artifactId>fasting</artifactId>
     <version>1.0.0</version>
-    <name>DisableEat</name>
+    <name>Fasting</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
