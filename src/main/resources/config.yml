@@ -25,3 +25,10 @@ disabled-server-times:
 # Message to send to the player if they are in a disabled range
 # If this is an empty string (''), the player won't be sent anything
 disabled-message: '&cYou cannot eat/drink during this time!'
+
+# This will prevent starvation damage while a player is fasting
+prevent-starvation-damage: true
+
+# This will prevent players from going below 3 hunger bars while fasting
+# (if they were at or above 3 before fasting)
+prevent-sprint-loss: true

@@ -7,8 +7,11 @@ import jdk.internal.jline.internal.Nullable;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,6 +26,8 @@ public class Fasting extends JavaPlugin implements Listener
     private boolean preventDrinking;
     private Set<DisabledRange> disabledRanges;
     private String disabledMessage;
+    private boolean disableStarvationWhileFasting;
+    private boolean preventSprintLoss;
     
     @Override
     public void onEnable()
@@ -53,10 +58,15 @@ public class Fasting extends JavaPlugin implements Listener
         return false;
     }
     
+    public boolean isDisabled(@Nullable World world)
+    {
+        return (isEnabledWorld(world) && isInTimeRange(world));
+    }
+    
     @EventHandler(ignoreCancelled = true)
     public void onPlayerItemConsume(PlayerItemConsumeEvent event)
     {
-        boolean disabled = (isEnabledWorld(event.getPlayer().getWorld()) && isInTimeRange(event.getPlayer().getWorld()));
+        boolean disabled = isDisabled(event.getPlayer().getWorld());
         if(disabled)
         {
             if(event.getItem().getType().isEdible() && preventEating)
@@ -73,13 +83,35 @@ public class Fasting extends JavaPlugin implements Listener
                 event.getPlayer().sendMessage(disabledMessage);
             }
         }
-        
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerDamage(EntityDamageEvent event)
+    {
+        if(disableStarvationWhileFasting && event.getCause() == EntityDamageEvent.DamageCause.STARVATION)
+        {
+            if(isDisabled(event.getEntity().getWorld()))
+            {
+                event.setCancelled(true);
+            }
+        }
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onFoodLevelChange(FoodLevelChangeEvent event)
+    {
+        if(preventSprintLoss && event.getFoodLevel() < 6 && isDisabled(event.getEntity().getWorld()))
+        {
+            event.setCancelled(true);
+        }
     }
     
     public void reload(CommandSender sender)
     {
         saveDefaultConfig();
         reloadConfig();
+        getConfig().options().copyDefaults(true);
+        saveConfig();
         
         enabledWorlds = new HashSet<>();
         enabledWorlds.addAll(getConfig().getStringList("enabled-worlds"));
@@ -119,6 +151,8 @@ public class Fasting extends JavaPlugin implements Listener
         }
         
         disabledMessage = ChatColor.translateAlternateColorCodes('&', getConfig().getString("disabled-message"));
+        disableStarvationWhileFasting = getConfig().getBoolean("prevent-starvation-damage");
+        preventSprintLoss = getConfig().getBoolean("prevent-sprint-loss");
     }
     
     public boolean shouldPreventEating()
