@@ -1,7 +1,7 @@
 name: Fasting
 main: com.darkender.plugins.fasting.Fasting
 version: ${project.version}
-api-version: 1.15
+api-version: 1.13
 author: Techdoodle
 commands:
   fasting:
